@@ -1,0 +1,39 @@
+name: ticket-watch
+
+on:
+  schedule:
+    - cron: "0 * * * *"      # 毎時0分に起動
+  workflow_dispatch:          # 手動実行(テスト用)
+
+concurrency:
+  group: ticket-watch
+  cancel-in-progress: false   # 重複起動を防ぐ
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # 前回ジョブの出品一覧を引き継ぐ(切り替わり時の重複通知・取りこぼし防止)
+      - uses: actions/cache@v4
+        with:
+          path: data
+          key: tickets-${{ github.run_id }}
+          restore-keys: tickets-
+
+      - run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - run: python main.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORDWEBHOOKURL }}
+          RUN_MINUTES: "58"
+          INTERVAL_SEC: "120"
