@@ -1,0 +1,4 @@
+ARTIST = "MAZZEL"
+EVENT_NAME = "Play at the MUZEUM Vol.2"
+
+TICKET_QUANTITY = 1
