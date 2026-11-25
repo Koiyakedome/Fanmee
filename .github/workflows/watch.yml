@@ -34,6 +34,6 @@ jobs:
 
       - run: python -u main.py
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORDWEBHOOKURL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEB_HOOKURL }}
           RUN_MINUTES: "58"
           INTERVAL_SEC: "120"
