@@ -81,8 +81,8 @@ def check_tickets(browser: Browser):
         page.wait_for_load_state("domcontentloaded")
         page.wait_for_timeout(3000)
 
-        select_option(page, 0, "MAZZEL")
-        select_option(page, 2, TOUR_NAME)
+        #select_option(page, 0, "MAZZEL")
+        #select_option(page, 2, TOUR_NAME)
         select_option(page, 3, f"{TICKET_QUANTITY}枚")
 
         page.get_by_role("button", name="検索", exact=True).click()
